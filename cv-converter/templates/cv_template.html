@@ -1,0 +1,232 @@
+<!-- Macro to render formatted text runs -->
+{% macro render_runs(runs) %}
+    {% for run in runs %}
+        <span {% if run.bold %}class="bold"{% endif %}{% if run.italic %} class="italic"{% endif %}{% if run.underline %} class="underline"{% endif %}>
+            {{ run.text }}
+        </span>
+    {% endfor %}
+{% endmacro %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ name or 'CV' }} - Curriculum Vitae</title>
+    <link rel="stylesheet" href="cv_styles.css">
+</head>
+<body>
+    <div class="page-container">
+        <!-- Header with dark blue background -->
+        <div class="cv-header">
+            <div class="header-content">
+                {% if name %}
+                <h1>{{ name }}</h1>
+                {% endif %}
+
+                {% if contact %}
+                <div class="contact-info">
+                    {% for item in contact %}
+                        {% if 'linkedin' not in item.text.lower() and 'xing' not in item.text.lower() and 'github' not in item.text.lower() %}
+                            {% if '@' in item.text %}
+                                {# Email - make it a clickable link #}
+                                <a href="mailto:{{ item.text.strip() }}">{{ item.text.strip() }}</a>
+                            {% else %}
+                                {{ render_runs(item.runs)|safe }}
+                            {% endif %}
+                            {% if not loop.last %}<br>{% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/nicolas-christie" target="_blank">LinkedIn</a>
+                        <a href="https://www.xing.com/profile/Nicolas_Christie" target="_blank">Xing</a>
+                        <a href="https://github.com/nicolaschristie" target="_blank">GitHub</a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <img src="header-photo.jpg" alt="{{ name }}" class="header-photo">
+        </div>
+
+        <!-- Main content -->
+        <div class="main-content">
+            {% for section in sections %}
+                {% if 'Work Experience' in section.title or 'Experience' in section.title %}
+                    <!-- Work Experience Section with Timeline -->
+                    <h2>{{ section.title }}</h2>
+                    <div class="timeline-section">
+                        {% set current_job = {} %}
+                        {% for item in section.content %}
+                            {% if item.type == 'list_item' %}
+                                <!-- This is a date/company/location line -->
+                                {% if current_job.get('started') %}
+                                    <!-- Close previous job -->
+                                    </div></div>
+                                {% endif %}
+                                <div class="job-entry">
+                                    <div class="timeline-date">{{ item.text.split('\t')[0] if '\t' in item.text else item.text.split()[0:3]|join(' ') }}</div>
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="company-name">
+                                            {% for run in item.runs %}
+                                                {% if run.bold %}{{ run.text }}{% endif %}
+                                            {% endfor %}
+                                            <span class="job-location">
+                                                {% for run in item.runs %}
+                                                    {% if run.italic %}{{ run.text }}{% endif %}
+                                                {% endfor %}
+                                            </span>
+                                        </div>
+                                {% set _ = current_job.update({'started': true}) %}
+
+                            {% elif item.type == 'paragraph' %}
+                                {% set has_underline = item.runs|selectattr('underline')|list|length > 0 %}
+                                {% set is_italic = item.runs|selectattr('italic')|list|length > 0 %}
+                                {% set starts_with_about = item.text.lower().startswith('about the company') %}
+
+                                {% if has_underline %}
+                                    <!-- Job title -->
+                                    <div class="job-title">
+                                        {{ render_runs(item.runs)|safe }}
+                                    </div>
+                                {% elif starts_with_about %}
+                                    <!-- About the company section -->
+                                    <div class="about-company">
+                                        <span class="about-company-label">About the company:</span> {{ item.text.replace('About the company:', '').strip() }}
+                                    </div>
+                                {% elif item.text.strip() and not is_italic %}
+                                    <!-- Regular job description or tech stack -->
+                                    {% set is_tech_line = 'C#' in item.text or 'HTML' in item.text or 'JavaScript' in item.text or 'SQL' in item.text or 'ASP.NET' in item.text or 'Python' in item.text or 'Power Platform' in item.text or 'SharePoint' in item.text or 'Azure' in item.text or 'Firmware' in item.text %}
+                                    {% if is_tech_line %}
+                                        <div class="job-tech">
+                                            {{ item.text }}
+                                        </div>
+                                    {% else %}
+                                        <div class="job-description">
+                                            <ul>
+                                                <li>{{ item.text }}</li>
+                                            </ul>
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if current_job.get('started') %}
+                            </div></div>
+                        {% endif %}
+                    </div>
+
+                {% elif 'Education' in section.title %}
+                    <!-- Education Section with Timeline -->
+                    <h2>{{ section.title }}</h2>
+                    <div class="timeline-section">
+                        {% set in_entry = {'value': false} %}
+                        {% for item in section.content %}
+                            {% if item.text and item.text.lower().startswith('languages') %}
+                                <!-- Skip - will be rendered after education -->
+                                {% if in_entry.value %}
+                                    </div></div> <!-- Close previous entry -->
+                                    {% set _ = in_entry.update({'value': false}) %}
+                                {% endif %}
+                            {% elif item.type == 'list_item' or (item.type == 'paragraph' and '\t' in item.text and not item.text.lower().startswith('languages')) %}
+                                <!-- Start new education entry (date/institution line) -->
+                                {% if in_entry.value %}
+                                    </div></div> <!-- Close previous entry -->
+                                {% endif %}
+                                <div class="education-entry">
+                                    <div class="timeline-date">{{ item.text.split('\t')[0] if '\t' in item.text else item.text.split()[0:3]|join(' ') }}</div>
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="education-school">
+                                            {% for run in item.runs %}
+                                                {% if run.bold %}{{ run.text }}{% endif %}
+                                            {% endfor %}
+                                        </div>
+                                {% set _ = in_entry.update({'value': true}) %}
+                            {% elif item.type == 'paragraph' and item.text.strip() and not item.text.lower().startswith('languages') %}
+                                <!-- Add details to current entry -->
+                                        <div class="education-details">
+                                            {{ item.text }}
+                                        </div>
+                            {% endif %}
+                        {% endfor %}
+                        {% if in_entry.value %}
+                            </div></div> <!-- Close last entry -->
+                        {% endif %}
+                    </div>
+
+                    <!-- Languages Section -->
+                    {% for item in section.content %}
+                        {% if item.text and item.text.lower().startswith('languages') %}
+                            <div class="languages-section">
+                                <span class="languages-label">{{ item.text.split('\t')[0] if '\t' in item.text else 'Languages' }}</span>
+                                <span class="languages-content">{{ item.text.split('\t')[1] if '\t' in item.text else item.text.replace('Languages', '').strip() }}</span>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                {% elif 'Skills' in section.title %}
+                    <!-- Skills Section with pill tags -->
+                    <h2>{{ section.title }}</h2>
+                    <div class="skills-section">
+                        {% for item in section.content %}
+                            {% if item.type == 'paragraph' %}
+                                {% set parts = item.text.split(':', 1) %}
+                                {% if parts|length == 2 %}
+                                    <div class="skill-category">
+                                        <span class="skill-category-label">{{ parts[0] }}:</span>
+                                        <div class="skill-tags">
+                                            {% for skill in parts[1].split(',') %}
+                                                <span class="skill-tag">{{ skill.strip() }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <p>{{ item.text }}</p>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                {% elif 'Other' in section.title %}
+                    <!-- Other Section -->
+                    <h2>{{ section.title }}</h2>
+
+                {% elif 'Projects' in section.title %}
+                    <!-- Projects Subsection under Other -->
+                    <div class="projects-section">
+                        <h3>Projects</h3>
+                        <ul class="projects-list">
+                            {% for item in section.content %}
+                                {% if item.get('text') and item.text.strip() %}
+                                    <li>{{ item.text }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                {% elif 'Languages' in section.title %}
+                    <!-- Skip standalone Languages section - it's now under Education -->
+
+                {% else %}
+                    <!-- Generic section -->
+                    <h2>{{ section.title }}</h2>
+                    {% for item in section.content %}
+                        {% if item.type == 'paragraph' %}
+                            <p class="{% if item.alignment %}text-{{ item.alignment }}{% endif %}">
+                                {{ render_runs(item.runs)|safe }}
+                            </p>
+                        {% elif item.type == 'list_item' %}
+                            <div class="list-item">
+                                {{ render_runs(item.runs)|safe }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

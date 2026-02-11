@@ -1,0 +1,378 @@
+/* CV Styles - Professional Resume Template */
+
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Calibri', 'Arial', sans-serif;
+    font-size: 11pt;
+    line-height: 1.5;
+    color: #000;
+    background: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+.page-container {
+    max-width: 210mm; /* A4 width */
+    margin: 0 auto;
+    background: #fff;
+}
+
+/* Print styles */
+@media print {
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .page-container {
+        max-width: 100%;
+        margin: 0;
+    }
+
+    @page {
+        size: A4;
+        margin: 0;
+    }
+
+    .no-print {
+        display: none;
+    }
+
+    /* Avoid page breaks in the middle of content */
+    h2 {
+        page-break-after: avoid;
+    }
+
+    .job-entry {
+        page-break-inside: avoid;
+    }
+}
+
+/* Header section with dark blue background */
+.cv-header {
+    background: #455A64;
+    color: #fff;
+    padding: 40px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+}
+
+.header-content {
+    flex: 1;
+}
+
+.cv-header h1 {
+    font-size: 36pt;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.contact-info {
+    font-size: 11pt;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+.contact-info a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.social-links {
+    display: flex;
+    gap: 60px;
+    margin-top: 10px;
+}
+
+.social-links a {
+    color: #fff;
+    text-decoration: underline;
+    font-size: 11pt;
+}
+
+.header-photo {
+    width: 180px;
+    height: 180px;
+    border-radius: 4px;
+    object-fit: cover;
+    margin-left: 40px;
+}
+
+/* Main content area */
+.main-content {
+    padding: 30px 40px;
+}
+
+/* Section headings */
+h2 {
+    font-size: 16pt;
+    font-weight: bold;
+    color: #000;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 5px;
+}
+
+h2:first-child {
+    margin-top: 0;
+}
+
+h3 {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #000;
+    margin-top: 20px;
+    margin-bottom: 12px;
+}
+
+/* Timeline design for Work Experience and Education */
+.timeline-section {
+    position: relative;
+    margin-left: 20px;
+}
+
+/* Timeline entry styling (shared by job and education entries) */
+.job-entry,
+.education-entry {
+    margin-bottom: 20px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 135px 20px 1fr;
+    gap: 0;
+    align-items: start;
+}
+
+/* Segmented timeline line - creates individual line between each entry */
+.job-entry::after,
+.education-entry::after {
+    content: '';
+    position: absolute;
+    left: 143px; /* Center of dot column: 135px (date width) + 9px (half of 20px dot width) - 1px (half of line width) */
+    top: 12px; /* Start below the dot (~0.4cm from dot center) */
+    bottom: -8px; /* Extend to next entry (spacing between entries is 20px, leave ~12px before next dot) */
+    width: 2px;
+    background: #ccc;
+    z-index: 0;
+}
+
+/* Remove line from last entry in section */
+.job-entry:last-of-type::after,
+.education-entry:last-of-type::after {
+    display: none;
+}
+
+.timeline-date {
+    font-size: 11pt;
+    color: #000;
+    padding-top: 2px;
+}
+
+.timeline-dot {
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 4px;
+    position: relative;
+    z-index: 1;
+}
+
+.timeline-dot::before {
+    content: "●";
+    font-size: 10pt;
+    color: #000;
+    background: #fff;
+    padding: 0 2px;
+}
+
+.timeline-content {
+    padding-left: 15px;
+}
+
+.company-name {
+    font-weight: bold;
+    font-size: 12pt;
+    margin-bottom: 3px;
+}
+
+.job-location {
+    font-style: italic;
+    color: #666;
+    font-size: 10pt;
+    float: right;
+}
+
+.job-title {
+    margin-bottom: 8px;
+}
+
+.job-title .underline {
+    text-decoration: underline;
+}
+
+.job-description {
+    margin-bottom: 5px;
+}
+
+.job-description ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 10px;
+}
+
+.job-description li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 8px;
+    text-align: justify;
+}
+
+.job-description li:before {
+    content: "●";
+    position: absolute;
+    left: 5px;
+    font-weight: bold;
+    font-size: 9pt;
+}
+
+.job-tech {
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 25px;
+    text-align: justify;
+}
+
+.job-tech:before {
+    content: "●";
+    position: absolute;
+    left: 5px;
+    font-weight: bold;
+    font-size: 9pt;
+}
+
+.about-company {
+    font-style: italic;
+    margin-bottom: 15px;
+    text-align: justify;
+    color: #555;
+}
+
+.about-company-label {
+    color: #000;
+    font-weight: bold;
+}
+
+/* Education section */
+.education-school {
+    font-weight: bold;
+    font-size: 11pt;
+    margin-bottom: 3px;
+}
+
+.education-details {
+    margin-bottom: 5px;
+}
+
+/* Languages section */
+.languages-section {
+    margin-bottom: 20px;
+    margin-left: 0;
+}
+
+.languages-label {
+    font-weight: bold;
+    display: inline;
+    margin-right: 10px;
+}
+
+.languages-content {
+    display: inline;
+}
+
+/* Skills section with pill tags */
+.skills-section {
+    margin-bottom: 20px;
+    margin-left: 0;
+}
+
+.skill-category {
+    margin-bottom: 15px;
+}
+
+.skill-category-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border: 1px solid #000;
+    border-radius: 15px;
+    font-size: 10pt;
+    white-space: nowrap;
+    background-color: #f5f5f5;
+}
+
+/* Projects section */
+.projects-section {
+    margin-left: 0;
+}
+
+.projects-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.projects-list li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 8px;
+}
+
+.projects-list li:before {
+    content: "●";
+    position: absolute;
+    left: 5px;
+    font-weight: bold;
+    font-size: 9pt;
+}
+
+/* Text formatting */
+.bold {
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+/* Paragraph styles */
+p {
+    margin-bottom: 8px;
+}
+
+.text-justify {
+    text-align: justify;
+}

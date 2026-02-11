@@ -1,0 +1,451 @@
+/* ============================================
+   CV Styles - Professional Resume Template
+   ============================================ */
+
+/* -------------------- Reset & Base -------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Calibri', 'Arial', sans-serif;
+    font-size: 10pt;
+    line-height: 1.4;
+    color: #000;
+    background: #fff;
+}
+
+.page-container {
+    max-width: 210mm; /* A4 width */
+    margin: 0 auto;
+    background: #fff;
+}
+
+/* -------------------- Header Section -------------------- */
+.cv-header {
+    background: #455A64;
+    color: #fff;
+    padding: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-content {
+    flex: 1;
+}
+
+.cv-header h1 {
+    font-size: 36pt;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.contact-info {
+    font-size: 11pt;
+    line-height: 1.8;
+    margin-top: 10px;
+}
+
+.contact-info a {
+    color: #AFD2EF;
+    text-decoration: underline;
+}
+
+.social-links {
+    display: flex;
+    gap: 60px;
+    margin-top: 10px;
+    margin-left: 25px;
+}
+
+.social-links a {
+    color: #AFD2EF;
+    text-decoration: underline;
+    font-size: 11pt;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.social-icon {
+    height: 20px;
+    width: 20px;
+    vertical-align: middle;
+}
+
+.header-photo {
+    width: 180px;
+    height: 180px;
+    border-radius: 4px;
+    object-fit: cover;
+    margin-left: 40px;
+}
+
+/* -------------------- Main Content -------------------- */
+.main-content {
+    padding: 30px 40px;
+}
+
+/* -------------------- Typography -------------------- */
+h2 {
+    font-size: 16pt;
+    font-weight: bold;
+    color: #000;
+    margin-top: 10px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 5px;
+}
+
+h2:first-child {
+    margin-top: 0;
+}
+
+h3 {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #000;
+    margin-top: 20px;
+}
+
+/* -------------------- Timeline Sections -------------------- */
+.timeline-section {
+    position: relative;
+    margin-left: 20px;
+    margin-top: 15px;
+}
+
+.job-entry,
+.education-entry {
+    margin-top: 10px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 135px 20px 1fr;
+    gap: 0;
+    align-items: start;
+}
+
+/* Segmented timeline line between entries */
+.job-entry::after,
+.education-entry::after {
+    content: '';
+    position: absolute;
+    left: 144px; /* Center of dot: 135px + 9px */
+    top: 23px; /* 15px gap from dot (dot at 3px) */
+    bottom: -15px; /* 15px gap to next dot (next entry margin 10px + dot at 3px = 13px, 13 - (-2) = 15px) */
+    width: 2px;
+    background: #AFD2EF;
+    z-index: 0;
+}
+
+.job-entry:last-of-type::after,
+.education-entry:last-of-type::after {
+    display: none;
+}
+
+.timeline-date {
+    font-size: 11pt;
+    color: #000;
+    padding-top: 2px;
+}
+
+.timeline-dot {
+    color: #AFD2EF;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 3px;
+    position: relative;
+    z-index: 1;
+}
+
+.timeline-dot::before {
+    content: "●";
+    font-size: 10pt;
+    color: #000;
+    background: #fff;
+    padding: 0 2px;
+}
+
+.timeline-content {
+    padding-left: 15px;
+    padding-top: 2px; /* Align with timeline-date padding-top */
+}
+
+/* -------------------- Work Experience -------------------- */
+.company-name {
+    font-weight: bold;
+    font-size: 12pt;
+}
+
+.job-location {
+    font-style: italic;
+    color: #666;
+    font-size: 10pt;
+    float: right;
+}
+
+.job-title {
+    margin-top: 8px;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.job-tech {
+    margin-top: 5px;
+    position: relative;
+    padding-left: 25px;
+    text-align: justify;
+}
+
+.job-tech:before {
+    content: "▪";
+    position: absolute;
+    left: 5px;
+    font-weight: bold;
+    font-size: 9pt;
+}
+
+.about-company {
+    font-style: italic;
+    margin-top: 15px;
+    text-align: justify;
+    color: #555;
+}
+
+.about-company-label {
+    color: #000;
+    font-weight: normal;
+}
+
+/* -------------------- Education -------------------- */
+.education-school {
+    font-weight: bold;
+    font-size: 11pt;
+    margin-top: 0; /* Alignment handled by timeline-content padding-top */
+}
+
+.education-details {
+    margin-top: 5px;
+}
+
+/* -------------------- Languages -------------------- */
+.languages-section {
+    margin-left: 20px;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #fff;
+    display: grid;
+    grid-template-columns: 135px 20px 1fr;
+    gap: 0;
+}
+
+.languages-label {
+    font-weight: bold;
+    padding-top: 2px;
+}
+
+.languages-content {
+    padding-left: 15px;
+    grid-column: 3;
+}
+
+/* -------------------- Skills -------------------- */
+.skills-section {
+    margin-top: 20px;
+}
+
+.skill-category {
+    margin-top: 15px;
+}
+
+.skill-category:first-child {
+    margin-top: 10px;
+}
+
+.skill-category-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    margin-left: 20px;
+}
+
+.skill-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border: 1px solid #000;
+    border-radius: 15px;
+    font-size: 10pt;
+    white-space: nowrap;
+    background-color: #f5f5f5;
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+/* Force line break in flexbox layout */
+.skill-break {
+    flex-basis: 100%;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+/* -------------------- Projects -------------------- */
+.projects-section {
+    margin-left: 0;
+}
+
+/* ============================================
+   PRINT STYLES (PDF Output)
+   ============================================ */
+@media print {
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .page-container {
+        max-width: 100%;
+        margin: 0;
+    }
+
+    @page {
+        size: A4;
+        margin: 15mm -1mm 15mm -1mm;
+    }
+
+    @page :first {
+        margin: -1mm -1mm 15mm -1mm;
+    }
+
+    .no-print {
+        display: none;
+    }
+
+    /* Prevent page breaks */
+    h2 {
+        page-break-after: avoid;
+    }
+
+    .job-entry,
+    .education-entry {
+        page-break-inside: avoid;
+    }
+
+    /* -------------------- Header (Print) -------------------- */
+    .cv-header {
+        margin: 0 -20mm 0 -20mm;
+        padding: 40px 55px 40px 55px;
+    }
+
+    .cv-header h1 {
+        font-size: 30pt;
+        margin-bottom: 10px; /* Reduced from 12px */
+    }
+
+    .header-photo {
+        width: 150px;
+        height: 150px;
+        margin-right: 80px;
+    }
+
+    .header-content {
+        margin-left: 80px;
+        margin-right: 80px;
+    }
+
+    .contact-info {
+        font-size: 10pt;
+        line-height: 1.6;
+    }
+
+    .social-links a {
+        font-size: 9pt;
+        color: #AFD2EF;
+    }
+
+    .social-icon {
+        height: 14px;
+        width: 14px;
+    }
+
+    /* -------------------- Main Content (Print) -------------------- */
+    .main-content {
+        padding: 15px 40px; /* Reduced vertical from 18px, increased horizontal for readability */
+    }
+
+    /* -------------------- Typography (Print) -------------------- */
+    h2 {
+        font-size: 13pt;
+        margin-top: 12px; /* Reduced from 15px */
+    }
+
+    h2:first-child {
+        margin-top: 0;
+    }
+
+    h3 {
+        font-size: 11pt;
+        margin-top: 12px; /* Reduced from 15px */
+    }
+
+    /* -------------------- Timeline (Print) -------------------- */
+    .timeline-section {
+        margin-top: 8px; /* Reduced from 15px */
+    }
+
+    .job-entry,
+    .education-entry {
+        margin-top: 10px; /* Reduced from 12px */
+    }
+
+    /* -------------------- Work Experience (Print) -------------------- */
+    .company-name {
+        font-size: 11pt;
+    }
+
+    .job-tech {
+        margin-top: 5px; /* Reduced from 6px */
+    }
+
+    .about-company {
+        margin-top: 8px; /* Reduced from 10px */
+    }
+
+    /* -------------------- Languages (Print) -------------------- */
+    .languages-section {
+        margin-top: 12px; /* Reduced from 15px */
+    }
+
+    /* -------------------- Skills (Print) -------------------- */
+    .skills-section {
+        margin-top: 12px; /* Reduced from 15px */
+    }
+
+    .skill-category {
+        margin-top: 8px; /* Reduced from 10px */
+    }
+
+    .skill-category:first-child {
+        margin-top: 8px;
+    }
+
+    .skill-tag {
+        padding: 3px 10px;
+        font-size: 9pt;
+    }
+}
