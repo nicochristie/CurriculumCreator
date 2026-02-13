@@ -22,8 +22,8 @@ This CV is generated from HTML/CSS and automatically converted to PDF using Pyth
 
 **Contact:**
 - <img src="media/email-envelope.svg" alt="Email" width="16" height="16"> nicolas.christie@gmail.com
-- <img src="media/linkedin.svg" alt="LinkedIn" width="16" height="16"><a href="https://www.linkedin.com/in/nico-christie/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-- <img src="media/github.svg" alt="GitHub" width="16" height="16"><a href="https://github.com/nicochristie" target="_blank" rel="noopener noreferrer">GitHub</a>
+- <img src="media/linkedin.svg" alt="LinkedIn" width="16" height="16"><a href="https://www.linkedin.com/in/nico-christie/" target="_blank" rel="noopener noreferrer"> LinkedIn</a>
+- <img src="media/github.svg" alt="GitHub" width="16" height="16"><a href="https://github.com/nicochristie" target="_blank" rel="noopener noreferrer"> GitHub</a>
 ---
 
 #### Thank you  
